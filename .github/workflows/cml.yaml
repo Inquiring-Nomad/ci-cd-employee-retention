@@ -32,7 +32,4 @@ jobs:
           # Post reports as comments in GitHub PRs
           echo "## Metrics" > report.md
           cat metrics.txt >> report.md
-
-
-
           cml-send-comment report.md
