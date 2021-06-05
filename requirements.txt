@@ -1,5 +1,5 @@
 tensorflow
-numpy
+sklearn
 pandas
 flake8
 streamlit
