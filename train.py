@@ -41,10 +41,13 @@ nn_binaryclassifier = KerasClassifier(build_fn=build_nn_binclassifier, nb_epoch=
 
 # Cross-validation
 scores = cross_val_score(estimator=nn_binaryclassifier, X=df_tr, y=y_train, cv=5, n_jobs=-1,verbose=False)
-print(f'Scores: {scores.mean()}')
+
+
 
 # Evaluate model on test set
 nn_binaryclassifier.fit(df_tr, y_train,verbose=False)
 X_test_tr = ct.transform(X_test)
 test_predictions = nn_binaryclassifier.predict(X_test_tr)
-print(nn_binaryclassifier.score(X_test_tr, y_test))
+
+with open("metrics.txt", 'w') as outfile:
+    outfile.write(f"Test accuracy score : {100 * nn_binaryclassifier.score(X_test_tr, y_test):.2f}\n")
