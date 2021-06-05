@@ -1,5 +1,4 @@
 tensorflow
 sklearn
 pandas
-flake8
-streamlit
+
