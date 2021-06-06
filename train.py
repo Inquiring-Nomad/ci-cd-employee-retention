@@ -5,6 +5,8 @@ from sklearn.compose import ColumnTransformer
 from tensorflow.keras.wrappers.scikit_learn import KerasClassifier
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
+import scikitplot as skplt
+import matplotlib.pyplot as plt
 
 # Load data
 df = pd.read_csv("data/HR_comma_sep.csv")
@@ -41,10 +43,16 @@ nn_binaryclassifier = KerasClassifier(build_fn=build_nn_binclassifier, nb_epoch=
 
 # Cross-validation
 scores = cross_val_score(estimator=nn_binaryclassifier, X=df_tr, y=y_train, cv=5, n_jobs=-1,verbose=False)
-print(f'Scores: {scores.mean()}')
+
+
 
 # Evaluate model on test set
 nn_binaryclassifier.fit(df_tr, y_train,verbose=False)
 X_test_tr = ct.transform(X_test)
 test_predictions = nn_binaryclassifier.predict(X_test_tr)
-print(nn_binaryclassifier.score(X_test_tr, y_test))
+y_classes = (test_predictions > 0.5)
+
+with open("metrics.txt", 'w') as outfile:
+    outfile.write(f"Test accuracy score : {100 * nn_binaryclassifier.score(X_test_tr, y_test):.2f}\n")
+skplt.metrics.plot_confusion_matrix(y_test, y_classes, normalize=True)
+plt.savefig("test_confusion_matrix.png")

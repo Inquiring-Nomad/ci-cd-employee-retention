@@ -1,4 +1,6 @@
 tensorflow
 sklearn
 pandas
+scikit-plot
+matplotlib
 
