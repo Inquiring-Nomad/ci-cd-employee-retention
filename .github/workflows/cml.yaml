@@ -28,6 +28,9 @@ jobs:
           echo "## Metrics" > report.md
           cat metrics.txt >> report.md
 
+          echo "## Test set predictions confusion matrix" >> report.md
+          cml-publish test_confusion_matrix.png --md >> report.md
+
 
 
           cml-send-comment report.md
